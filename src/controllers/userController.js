@@ -8,7 +8,7 @@ const ApplicationUtil = require('../static/ApplicationUtil')
 // DAO
 const UserDAO = require('../DAO/UserDAO')
 
-//STATIC AND CODES HTTP
+// STATIC AND CODES HTTP
 const HttpCodes = require('../static/HttpCodes')
 const HandleError = require('../static/HandleError')
 
