@@ -8,6 +8,9 @@ const ApplicationUtil = require('../static/ApplicationUtil')
 // DAO
 const UserDAO = require('../DAO/UserDAO')
 
+// ENUM
+const Enum = require('../constant/Enum')
+
 // STATIC AND CODES HTTP
 const HttpCodes = require('../static/HttpCodes')
 const HandleError = require('../static/HandleError')
@@ -24,7 +27,7 @@ exports.deleteUser = async (req, res) => {
         }
 		const update = {
             $set: {
-                status: 'INACTIVE'
+                status: Enum.STATUS.INACTIVE
 			}
 		}
 		const userUpdated = await UserDAO.findOneAndUpdate(query, update)
@@ -51,7 +54,7 @@ exports.updateUser = async (req, res) => {
 		const update = {
             $set: {
                 name: name,
-                status: 'ACTIVE'
+                status: Enum.STATUS.ACTIVE
 			}
 		}
 		const userUpdated = await UserDAO.findOneAndUpdate(query, update)
@@ -106,7 +109,7 @@ exports.createUser = async (req, res) => {
             const update = {
                 $set: {
                     name: name,
-                    status: 'PENDING',
+                    status: Enum.STATUS.PENDING,
                     password: hash
                 }
             }
@@ -123,7 +126,7 @@ exports.createUser = async (req, res) => {
             name: name,
             mail: mail,
             password: hash,
-            status: 'PENDING' 
+            status: Enum.STATUS.PENDING 
         }
         const userSaved = await UserDAO.save(newUser)
         if (!userSaved) throw { code: 420, message: 'Não foi possível criar o usuário.' }
