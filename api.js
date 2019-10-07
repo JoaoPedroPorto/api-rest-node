@@ -8,10 +8,23 @@ const noCache = require('./src/middlewares/no-cache')
 const momentTimezone = require('moment-timezone')
 
 // CONECT TO DATABASE
+// `mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@${process.env.MONGO_ATLAS_CLUSTER}/${process.env.MONGO_ATLAS_DB}?retryWrites=true&w=majority`,
 mongoose.connect(
-    `mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@${process.env.MONGO_ATLAS_CLUSTER}/${process.env.MONGO_ATLAS_DB}?retryWrites=true&w=majority`,
-	{ autoIndex: false }
-)
+	`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}${process.env.MONGO_ATLAS_CLUSTER}/${process.env.MONGO_ATLAS_DB}?retryWrites=true&w=majority`,
+	{ 
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	}
+).then (() => 
+	console.log ('DB Connected!')
+).catch (err => {
+	console.log(`DB Connection Error: ${err.message}`);
+});
+
+mongoose.disconnect = () => {
+    console.log('Mongo disconnect.');
+    mongoose.disconnect();
+}
 
 mongoose.connection
 mongoose.Promise = global.Promise
